@@ -1,0 +1,23 @@
+databases:
+  - name: rubyshop
+    databaseName: rubyshop
+    user: rubyshop
+    plan: free
+
+services:
+  - type: web
+    name: rubyshop
+    runtime: ruby
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    # preDeployCommand: "bundle exec rails db:migrate" # preDeployCommand only available on paid instance types
+    startCommand: "bundle exec rails server"
+    envVars:
+      - key: postgresql://rubyshop:07BB7XeDEPBTC6ricIHejWQVOnqo1kBY@dpg-cts2hvjtq21c7395dslg-a/rubyshop_egkk
+        fromDatabase:
+          name: rubyshop
+          property: connectionString
+      - key: b0e2aff9178e5d993f11ed98a9ccb68b
+        sync: false
+      - key: WEB_CONCURRENCY
+        value: 2 # sensible default
